@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    compileSdkVersion 35
+    compileSdkVersion 34
     buildToolsVersion '35.0.0'
 
     namespace "xzr.hkf"
@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "xzr.hkf"
         minSdkVersion 21
-        targetSdkVersion 35
+        targetSdkVersion 34
         versionCode 4
         versionName "1.3"
     }
