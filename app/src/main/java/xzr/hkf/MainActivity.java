@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
                     .setPositiveButton(R.string.ok, null)
                     .setNegativeButton("Github", (dialog1, which1) -> MainActivity.this.startActivity(new Intent() {{
                         setAction(Intent.ACTION_VIEW);
-                        setData(Uri.parse("https://github.com/libxzr/HorizonKernelFlasher"));
+                        setData(Uri.parse("https://github.com/TelegramAt25/HorizonKernelFlasher"));
                     }})).create().show();
         } else if (item.getItemId() == R.id.flash_new) {
             flash_new();
