@@ -6,9 +6,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -42,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     static status cur_status;
+
+    int dpToPx(int px) {
+        final float scale = getResources().getDisplayMetrics().density;
+        return (int) (px * scale + 0.5f);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,26 +83,17 @@ public class MainActivity extends AppCompatActivity {
         logView.setTypeface(Typeface.MONOSPACE);
         scrollView.addView(logView);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flash_new();
-            }
-        });
-        fab.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                aboutDialog();
-                return false;
-            }
+        fab.setOnClickListener(v -> flash_new());
+        fab.setOnLongClickListener(v -> {
+            aboutDialog();
+            return false;
         });
         LinearLayout.LayoutParams pf = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
 
-        final float scale = this.getResources().getDisplayMetrics().density;
-        int mar = (int) (36 * scale + 0.5f);
+        int mar = dpToPx(36);
         pf.gravity = Gravity.BOTTOM | Gravity.END;
         pf.setMargins(mar, mar, mar, mar);
         fab.setLayoutParams(pf);
@@ -119,20 +112,20 @@ public class MainActivity extends AppCompatActivity {
         runOnUiThread(() -> {
             switch (cur_status) {
                 case error:
-                    setTitle(R.string.failed);
-                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_failure, null));
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(
+                        getResources(), R.drawable.fab_failure, null));
                     break;
                 case flashing:
-                    setTitle(R.string.flashing);
-                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_ongoing, null));
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(
+                        getResources(), R.drawable.fab_ongoing, null));
                     break;
                 case flashing_done:
-                    setTitle(R.string.flashing_done);
-                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_success, null));
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(
+                        getResources(), R.drawable.fab_success, null));
                     break;
                 default:
-                    setTitle(R.string.app_name);
-                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_default, null));
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(
+                        getResources(), R.drawable.fab_default, null));
             }
         });
     }
@@ -148,22 +141,6 @@ public class MainActivity extends AppCompatActivity {
         update_title();
         Toast.makeText(this, R.string.please_select_kzip, Toast.LENGTH_LONG).show();
         runWithFilePath(this, new Worker(this));
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.about) {
-            aboutDialog();
-        } else if (item.getItemId() == R.id.flash_new) {
-            flash_new();
-        }
-        return true;
     }
 
     void aboutDialog() {
@@ -201,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static fileWorker file_worker;
 
-    public static void runWithFilePath(Activity activity, fileWorker what) {
+    public static void runWithFilePath(Activity activity, @SuppressWarnings("ClassEscapesDefinedScope") fileWorker what) {
         MainActivity.file_worker = what;
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("*/*");
