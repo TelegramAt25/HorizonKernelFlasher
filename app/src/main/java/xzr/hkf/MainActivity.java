@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.ViewGroupCompat;
 import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
               | WindowInsetsCompat.Type.displayCutout()
             );
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            ViewGroupCompat.installCompatInsetsDispatch(v);
             return WindowInsetsCompat.CONSUMED;
         });
 
