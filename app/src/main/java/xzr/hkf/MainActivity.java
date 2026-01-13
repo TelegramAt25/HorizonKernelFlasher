@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
+import androidx.activity.OnBackPressedCallback;
 
 public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
@@ -50,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             return WindowInsetsCompat.CONSUMED;
         });
+
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (cur_status != status.flashing) {
+                    finish();
+                }
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, callback);
 
         logView.setTextIsSelectable(true);
         logView.setTypeface(Typeface.MONOSPACE);
@@ -88,12 +99,6 @@ public class MainActivity extends AppCompatActivity {
         update_title();
         Toast.makeText(this, R.string.please_select_kzip, Toast.LENGTH_LONG).show();
         runWithFilePath(this, new Worker(this));
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (cur_status != status.flashing)
-            super.onBackPressed();
     }
 
     @Override
