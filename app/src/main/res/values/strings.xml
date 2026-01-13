@@ -11,7 +11,7 @@
     <string name="no">No</string>
     <string name="failed_reboot">Failed to reboot</string>
     <string name="about">About</string>
-    <string name="about_msg">Author: LibXZR (xzr467706992)</string>
+    <string name="about_msg">original author: LibXZR (xzr467706992)\nforked / ruined by: fukiame</string>
     <string name="ok">ok</string>
     <string name="flash_new">Flash a new file</string>
     <string name="flashing">Flashing</string>
