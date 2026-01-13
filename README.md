@@ -1,4 +1,4 @@
-# Horizon Kernel Flasher
+# Horizon Kernel Flasher - soft forked
 
 ## What is this?
 
@@ -6,7 +6,7 @@
 
 ## Screenshots
 
-<img src="screenshots/ss1.jpg" width="180" height="400" /> <img src="screenshots/ss2.jpg" width="180" height="400" />
+<img src="screenshots/ss1.png" width="180" height="400" /> <img src="screenshots/ss2.png" width="180" height="400" />
 
 ## Prebuilt binary
 
