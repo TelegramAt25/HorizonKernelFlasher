@@ -1,10 +1,11 @@
 package xzr.hkf;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.widget.Toast;
 
 import androidx.documentfile.provider.DocumentFile;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -95,7 +96,7 @@ public class Worker extends MainActivity.fileWorker {
             return;
         }
         activity.runOnUiThread(() -> {
-            new AlertDialog.Builder(activity)
+            new MaterialAlertDialogBuilder(activity)
                     .setTitle(R.string.reboot_complete_title)
                     .setMessage(R.string.reboot_complete_msg)
                     .setCancelable(false)
