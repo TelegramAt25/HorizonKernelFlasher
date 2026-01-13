@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Horizon Kernel Flasher</string>
+    <string name="app_name">hzkf</string>
     <string name="please_select_kzip">Please select the flashable zip of the kernel</string>
     <string name="unable_cleanup">Unable to cleanup the environment</string>
     <string name="unable_copy">Unable to copy file</string>
