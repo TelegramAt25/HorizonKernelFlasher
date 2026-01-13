@@ -20,6 +20,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewGroupCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -86,6 +87,13 @@ public class MainActivity extends AppCompatActivity {
                 flash_new();
             }
         });
+        fab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                aboutDialog();
+                return false;
+            }
+        });
         LinearLayout.LayoutParams pf = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -112,15 +120,19 @@ public class MainActivity extends AppCompatActivity {
             switch (cur_status) {
                 case error:
                     setTitle(R.string.failed);
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_failure, null));
                     break;
                 case flashing:
                     setTitle(R.string.flashing);
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_ongoing, null));
                     break;
                 case flashing_done:
                     setTitle(R.string.flashing_done);
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_success, null));
                     break;
                 default:
                     setTitle(R.string.app_name);
+                    fab.setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.fab_default, null));
             }
         });
     }
@@ -147,18 +159,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about) {
-            new MaterialAlertDialogBuilder(this)
-                    .setTitle(R.string.about)
-                    .setMessage(R.string.about_msg)
-                    .setPositiveButton(R.string.ok, null)
-                    .setNegativeButton("Github", (dialog1, which1) -> MainActivity.this.startActivity(new Intent() {{
-                        setAction(Intent.ACTION_VIEW);
-                        setData(Uri.parse("https://github.com/TelegramAt25/HorizonKernelFlasher"));
-                    }})).create().show();
+            aboutDialog();
         } else if (item.getItemId() == R.id.flash_new) {
             flash_new();
         }
         return true;
+    }
+
+    void aboutDialog() {
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.about)
+                .setMessage(R.string.about_msg)
+                .setPositiveButton(R.string.ok, null)
+                .setNegativeButton("Github", (dialog1, which1) -> MainActivity.this.startActivity(new Intent() {{
+                    setAction(Intent.ACTION_VIEW);
+                    setData(Uri.parse("https://github.com/TelegramAt25/HorizonKernelFlasher"));
+                }})).create().show();
     }
 
     public static void _appendLog(String log, Activity activity) {
