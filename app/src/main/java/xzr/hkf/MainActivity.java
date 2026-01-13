@@ -12,7 +12,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
 
     TextView logView;
