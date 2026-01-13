@@ -19,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.ViewCompat;
 import androidx.activity.OnBackPressedCallback;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
 
@@ -110,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.about) {
-            new AlertDialog.Builder(this)
+            new MaterialAlertDialogBuilder(this)
                     .setTitle(R.string.about)
                     .setMessage(R.string.about_msg)
                     .setPositiveButton(R.string.ok, null)
