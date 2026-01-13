@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.WindowInsets;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -21,7 +20,6 @@ import androidx.core.view.ViewGroupCompat;
 import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.google.android.material.elevation.SurfaceColors;
 
 public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
@@ -47,17 +45,9 @@ public class MainActivity extends AppCompatActivity {
         scrollView = new ScrollView(this);
         logView = new TextView(this);
 
-        getWindow().getDecorView().setOnApplyWindowInsetsListener((v, insets) -> {
-            android.graphics.Insets statusBar = insets.getInsets(WindowInsets.Type.systemBars());
-            v.setPadding(0, -statusBar.top, 0, 0);
-            v.setBackgroundColor(SurfaceColors.SURFACE_5.getColor(this));
-            // ViewGroupCompat.installCompatInsetsDispatch(v);
-            return insets;
-        });
-
         ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(bars.left, 0, bars.right, bars.bottom);
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             ViewGroupCompat.installCompatInsetsDispatch(v);
             return WindowInsetsCompat.CONSUMED;
         });
