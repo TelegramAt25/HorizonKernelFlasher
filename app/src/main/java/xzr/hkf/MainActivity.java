@@ -13,6 +13,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.ViewCompat;
 
 public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
@@ -32,8 +36,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        WindowCompat.enableEdgeToEdge(getWindow());
+
         scrollView = new ScrollView(this);
         logView = new TextView(this);
+
+        ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
+            Insets bars = insets.getInsets(
+              WindowInsetsCompat.Type.systemBars()
+              | WindowInsetsCompat.Type.displayCutout()
+            );
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+            return WindowInsetsCompat.CONSUMED;
+        });
+
         logView.setTextIsSelectable(true);
         logView.setTypeface(Typeface.MONOSPACE);
         scrollView.addView(logView);
