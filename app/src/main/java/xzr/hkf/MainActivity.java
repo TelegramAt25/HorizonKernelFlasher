@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +23,15 @@ import androidx.core.view.ViewGroupCompat;
 import androidx.activity.OnBackPressedCallback;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
     static final boolean DEBUG = false;
 
     TextView logView;
     ScrollView scrollView;
+    FloatingActionButton fab;
+    LinearLayout lin;
 
     enum status {
         flashing,
@@ -42,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
 
         WindowCompat.enableEdgeToEdge(getWindow());
 
+        lin = new LinearLayout(this);
         scrollView = new ScrollView(this);
         logView = new TextView(this);
+        fab = new FloatingActionButton(this);
 
-        ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(lin, (v, insets) -> {
             Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             ViewGroupCompat.installCompatInsetsDispatch(v);
@@ -61,11 +69,40 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, callback);
+        LinearLayout.LayoutParams ps = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        ps.weight = 1;
+        scrollView.setLayoutParams(ps);
 
         logView.setTextIsSelectable(true);
         logView.setTypeface(Typeface.MONOSPACE);
         scrollView.addView(logView);
-        setContentView(scrollView);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flash_new();
+            }
+        });
+        LinearLayout.LayoutParams pf = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        final float scale = this.getResources().getDisplayMetrics().density;
+        int mar = (int) (36 * scale + 0.5f);
+        pf.gravity = Gravity.BOTTOM | Gravity.END;
+        pf.setMargins(mar, mar, mar, mar);
+        fab.setLayoutParams(pf);
+
+        lin.setOrientation(LinearLayout.VERTICAL);
+        lin.setFocusable(false);
+
+        lin.addView(scrollView);
+        lin.addView(fab);
+        setContentView(lin);
 
         flash_new();
     }
