@@ -1,7 +1,6 @@
 package xzr.hkf;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -47,10 +46,7 @@ public class MainActivity extends AppCompatActivity {
         logView = new TextView(this);
 
         ViewCompat.setOnApplyWindowInsetsListener(scrollView, (v, insets) -> {
-            Insets bars = insets.getInsets(
-              WindowInsetsCompat.Type.systemBars()
-              | WindowInsetsCompat.Type.displayCutout()
-            );
+            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             ViewGroupCompat.installCompatInsetsDispatch(v);
             return WindowInsetsCompat.CONSUMED;
